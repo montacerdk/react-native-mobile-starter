@@ -2,17 +2,17 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import React from 'react';
 
-import Details from '../../scenes/details';
+import Explore from '../../scenes/explore';
 import styles from './styles';
 
-const DetailsStack = createStackNavigator();
+const ExploreStack = createStackNavigator();
 
-const DetailsStackScreen = ({ navigation }) => {
+const ExploreStackScreen = ({ navigation }) => {
   return (
-    <DetailsStack.Navigator screenOptions={styles.header}>
-      <DetailsStack.Screen
-        name="Details"
-        component={Details}
+    <ExploreStack.Navigator screenOptions={styles.header}>
+      <ExploreStack.Screen
+        name="Explore"
+        component={Explore}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -26,8 +26,8 @@ const DetailsStackScreen = ({ navigation }) => {
           ),
         }}
       />
-    </DetailsStack.Navigator>
+    </ExploreStack.Navigator>
   );
 };
 
-export default DetailsStackScreen;
+export default ExploreStackScreen;

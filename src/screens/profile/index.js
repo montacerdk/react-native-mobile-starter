@@ -2,17 +2,17 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import React from 'react';
 
-import Details from '../../scenes/details';
+import Profile from '../../scenes/profile';
 import styles from './styles';
 
-const DetailsStack = createStackNavigator();
+const ProfileStack = createStackNavigator();
 
-const DetailsStackScreen = ({ navigation }) => {
+const ProfileStackScreen = ({ navigation }) => {
   return (
-    <DetailsStack.Navigator screenOptions={styles.header}>
-      <DetailsStack.Screen
-        name="Details"
-        component={Details}
+    <ProfileStack.Navigator screenOptions={styles.header}>
+      <ProfileStack.Screen
+        name="Profile"
+        component={Profile}
         options={{
           headerLeft: () => (
             <Icon.Button
@@ -26,8 +26,8 @@ const DetailsStackScreen = ({ navigation }) => {
           ),
         }}
       />
-    </DetailsStack.Navigator>
+    </ProfileStack.Navigator>
   );
 };
 
-export default DetailsStackScreen;
+export default ProfileStackScreen;
