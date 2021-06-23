@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 
 import DrawerContent from '../screens/drawer-content';
+import RootStack from '../screens/root-stack';
 import Bookmarks from '../screens/bookmarks';
 import Settings from '../screens/settings';
 import Details from '../screens/details';
@@ -15,14 +16,15 @@ const Drawer = createDrawerNavigator();
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
+      <RootStack />
+      {/* <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
         <Drawer.Screen name="Main" component={Main} />
         <Drawer.Screen name="Explore" component={Explore} />
         <Drawer.Screen name="Profile" component={Profile} />
         <Drawer.Screen name="Details" component={Details} />
         <Drawer.Screen name="Settings" component={Settings} />
         <Drawer.Screen name="Bookmarks" component={Bookmarks} />
-      </Drawer.Navigator>
+      </Drawer.Navigator> */}
     </NavigationContainer>
   );
 };
