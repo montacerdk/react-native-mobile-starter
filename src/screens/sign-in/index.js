@@ -2,6 +2,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import LinearGradient from 'react-native-linear-gradient';
 import Feather from 'react-native-vector-icons/Feather';
 import * as Animatable from 'react-native-animatable';
+import { useTheme } from 'react-native-paper';
 import React from 'react';
 import {
   TouchableOpacity,
@@ -12,8 +13,8 @@ import {
   Text,
 } from 'react-native';
 
-import { AuthContext } from '../../store/context';
 import { VALID_USERS } from '../../common/contants';
+import { AuthContext } from '../../store/context';
 import styles from './styles';
 
 const SignIn = ({ navigation }) => {
@@ -25,6 +26,8 @@ const SignIn = ({ navigation }) => {
     username: '',
     password: '',
   });
+
+  const { colors } = useTheme();
 
   const { signIn } = React.useContext(AuthContext);
 
@@ -110,13 +113,28 @@ const SignIn = ({ navigation }) => {
       <View style={styles.header}>
         <Text style={styles.text_header}>Welcome!</Text>
       </View>
-      <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-        <Text style={styles.text_footer}>Email</Text>
+      <Animatable.View
+        animation="fadeInUpBig"
+        style={[styles.footer, { backgroundColor: colors.background }]}>
+        <Text
+          style={[
+            styles.text_footer,
+            {
+              color: colors.text,
+            },
+          ]}>
+          Username
+        </Text>
         <View style={styles.action}>
-          <FontAwesome name="user-o" color="#05375a" size={20} />
+          <FontAwesome name="user-o" color={colors.text} size={20} />
           <TextInput
-            placeholder="Your Email"
-            style={styles.textInput}
+            placeholder="Your Username"
+            style={[
+              styles.textInput,
+              {
+                color: colors.text,
+              },
+            ]}
             autoCapitalize="none"
             onChangeText={value => handleEmailChange(value)}
             onEndEditing={e => handleValidUser(e.nativeEvent.text)}
@@ -134,12 +152,26 @@ const SignIn = ({ navigation }) => {
             </Text>
           </Animatable.View>
         )}
-        <Text style={[styles.text_footer, { marginTop: 30 }]}>Password</Text>
+        <Text
+          style={[
+            styles.text_footer,
+            {
+              color: colors.text,
+              marginTop: 35,
+            },
+          ]}>
+          Password
+        </Text>
         <View style={styles.action}>
-          <Feather name="lock" color="#05375a" size={20} />
+          <Feather name="lock" color={colors.text} size={20} />
           <TextInput
             placeholder="Your Password"
-            style={styles.textInput}
+            style={[
+              styles.textInput,
+              {
+                color: colors.text,
+              },
+            ]}
             secureTextEntry={data.secureTextEntry}
             autoCapitalize="none"
             onChangeText={value => handlePasswordChange(value)}

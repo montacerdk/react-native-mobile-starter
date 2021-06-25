@@ -1,11 +1,11 @@
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import React, { useState } from 'react';
 import { View } from 'react-native';
 import {
   TouchableRipple,
   Paragraph,
+  useTheme,
   Caption,
   Avatar,
   Switch,
@@ -13,19 +13,16 @@ import {
   Title,
   Text,
 } from 'react-native-paper';
+import React from 'react';
 
 import { AuthContext } from '../../store/context';
 
 import styles from './styles';
 
 const DrawerContent = props => {
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const { toggleTheme, signOut } = React.useContext(AuthContext);
 
-  const toggleTheme = () => {
-    setIsDarkTheme(!isDarkTheme);
-  };
-
-  const { signOut } = React.useContext(AuthContext);
+  const { dark } = useTheme();
 
   return (
     <View style={styles.drawerContent}>
@@ -105,7 +102,7 @@ const DrawerContent = props => {
               <View style={styles.preference}>
                 <Text>Dark Theme</Text>
                 <View pointerEvents="none">
-                  <Switch value={isDarkTheme} />
+                  <Switch value={dark} />
                 </View>
               </View>
             </TouchableRipple>

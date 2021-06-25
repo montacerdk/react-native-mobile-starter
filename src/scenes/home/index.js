@@ -1,12 +1,18 @@
-import { Text, View, Button } from 'react-native';
+import { Text, View, Button, StatusBar } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 import React from 'react';
 
 import styles from './styles';
 
 const Home = ({ navigation }) => {
+  const theme = useTheme();
+
   return (
     <View style={styles.container}>
-      <Text style={styles.content}>Home ...</Text>
+      <StatusBar barStyle={theme.dark ? 'light-content' : 'dark-content'} />
+      <Text style={[styles.content, { color: theme.colors.text }]}>
+        Home ...
+      </Text>
       <Button
         title="Go to details"
         onPress={() => navigation.navigate('Details')}

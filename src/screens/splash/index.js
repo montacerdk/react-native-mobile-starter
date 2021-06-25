@@ -1,13 +1,16 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { View, Text, TouchableOpacity } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
+import { useTheme } from '@react-navigation/native';
 import React from 'react';
 
-import LinearGradient from 'react-native-linear-gradient';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
 import styles from './styles';
+import { color } from 'react-native-reanimated';
 
 const Splash = ({ navigation }) => {
+  const { colors } = useTheme();
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -19,8 +22,12 @@ const Splash = ({ navigation }) => {
           duraton="1500"
         />
       </View>
-      <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-        <Text style={styles.title}>Welcome to Breakpoint Technology App</Text>
+      <Animatable.View
+        animation="fadeInUpBig"
+        style={[styles.footer, { backgroundColor: colors.background }]}>
+        <Text style={[styles.title, { color: colors.text }]}>
+          Welcome to Breakpoint Technology App
+        </Text>
         <Text style={styles.text}>Sign in to your account</Text>
         <View style={styles.button}>
           <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
