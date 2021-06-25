@@ -11,6 +11,8 @@ import {
   Text,
 } from 'react-native';
 
+import { AuthContext } from '../../store/context';
+import { VALID_USERS } from '../../common/contants';
 import styles from './styles';
 
 const SignIn = ({ navigation }) => {
@@ -22,6 +24,8 @@ const SignIn = ({ navigation }) => {
     username: '',
     password: '',
   });
+
+  const { signIn } = React.useContext(AuthContext);
 
   const handleEmailChange = val => {
     if (val.trim().length >= 4) {
@@ -64,6 +68,13 @@ const SignIn = ({ navigation }) => {
     });
   };
 
+  const loginHandle = (userName, password) => {
+    const foundUser = VALID_USERS.filter(item => {
+      return userName === item.username && password === item.password;
+    });
+    signIn(foundUser);
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#14174f" barStyle="light-content" />
@@ -104,10 +115,21 @@ const SignIn = ({ navigation }) => {
             )}
           </TouchableOpacity>
         </View>
+        <TouchableOpacity>
+          <Text style={{ color: '#14174f', marginTop: 15 }}>
+            Forgot password?
+          </Text>
+        </TouchableOpacity>
         <View style={styles.button}>
-          <LinearGradient colors={['#14179e', '#14174f']} style={styles.signIn}>
-            <Text style={[styles.textSign, { color: '#fff' }]}>Sign In</Text>
-          </LinearGradient>
+          <TouchableOpacity
+            style={styles.signIn}
+            onPress={() => loginHandle(data.username, data.password)}>
+            <LinearGradient
+              colors={['#14179e', '#14174f']}
+              style={styles.signIn}>
+              <Text style={[styles.textSign, { color: '#fff' }]}>Sign In</Text>
+            </LinearGradient>
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('SignUp')}
             style={[

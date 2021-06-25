@@ -14,6 +14,8 @@ import {
   Text,
 } from 'react-native-paper';
 
+import { AuthContext } from '../../store/context';
+
 import styles from './styles';
 
 const DrawerContent = props => {
@@ -22,6 +24,8 @@ const DrawerContent = props => {
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
   };
+
+  const { signOut } = React.useContext(AuthContext);
 
   return (
     <View style={styles.drawerContent}>
@@ -114,7 +118,9 @@ const DrawerContent = props => {
           icon={({ color, size }) => (
             <Icon name="exit-to-app" color={color} size={size} />
           )}
-          onPress={() => {}}
+          onPress={() => {
+            signOut();
+          }}
         />
       </Drawer.Section>
     </View>
