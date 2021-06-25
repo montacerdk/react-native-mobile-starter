@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   StatusBar,
+  Alert,
   View,
   Text,
 } from 'react-native';
@@ -45,6 +46,20 @@ const SignIn = ({ navigation }) => {
     }
   };
 
+  const handleValidUser = val => {
+    if (val.trim().length >= 4) {
+      setData({
+        ...data,
+        isValidUser: true,
+      });
+    } else {
+      setData({
+        ...data,
+        isValidUser: false,
+      });
+    }
+  };
+
   const handlePasswordChange = val => {
     if (val.trim().length >= 8) {
       setData({
@@ -72,6 +87,20 @@ const SignIn = ({ navigation }) => {
     const foundUser = VALID_USERS.filter(item => {
       return userName === item.username && password === item.password;
     });
+    if (data.username.length === 0 || data.password.length === 0) {
+      Alert.alert(
+        'Wrong Input!',
+        'Username or password field cannot be empty.',
+        [{ text: 'Okay' }],
+      );
+      return;
+    }
+    if (foundUser.length === 0) {
+      Alert.alert('Invalid User!', 'Username or password is incorrect.', [
+        { text: 'Okay' },
+      ]);
+      return;
+    }
     signIn(foundUser);
   };
 
@@ -90,6 +119,7 @@ const SignIn = ({ navigation }) => {
             style={styles.textInput}
             autoCapitalize="none"
             onChangeText={value => handleEmailChange(value)}
+            onEndEditing={e => handleValidUser(e.nativeEvent.text)}
           />
           {data.check_textInputChange ? (
             <Animatable.View animation={'bounceIn'}>
@@ -97,6 +127,13 @@ const SignIn = ({ navigation }) => {
             </Animatable.View>
           ) : null}
         </View>
+        {data.isValidUser ? null : (
+          <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>
+              Username must be 4 characters long.
+            </Text>
+          </Animatable.View>
+        )}
         <Text style={[styles.text_footer, { marginTop: 30 }]}>Password</Text>
         <View style={styles.action}>
           <Feather name="lock" color="#05375a" size={20} />
@@ -115,6 +152,13 @@ const SignIn = ({ navigation }) => {
             )}
           </TouchableOpacity>
         </View>
+        {data.isValidPassword ? null : (
+          <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>
+              Password must be 8 characters long.
+            </Text>
+          </Animatable.View>
+        )}
         <TouchableOpacity>
           <Text style={{ color: '#14174f', marginTop: 15 }}>
             Forgot password?
