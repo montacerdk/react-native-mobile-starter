@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import React from 'react';
 
-import Profile from '../../scenes/profile';
+import Profile from '../../components/profile';
 import styles from './styles';
 
 const ProfileStack = createStackNavigator();

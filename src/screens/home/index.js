@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import React from 'react';
 
-import Home from '../../scenes/home';
+import Home from '../../components/home';
 import styles from './styles';
 
 const HomeStack = createStackNavigator();

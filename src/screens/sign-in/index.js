@@ -13,6 +13,7 @@ import {
   Text,
 } from 'react-native';
 
+import LoginFacebbok from '../../components/login-facebook';
 import { VALID_USERS } from '../../common/contants';
 import { AuthContext } from '../../store/context';
 import styles from './styles';
@@ -214,6 +215,8 @@ const SignIn = ({ navigation }) => {
             ]}>
             <Text style={[styles.textSign, { color: '#14174f' }]}>Sign Up</Text>
           </TouchableOpacity>
+          <Text style={{ marginTop: 20, marginBottom: 20 }}>Or</Text>
+          <LoginFacebbok navigation={navigation} />
         </View>
       </Animatable.View>
     </View>

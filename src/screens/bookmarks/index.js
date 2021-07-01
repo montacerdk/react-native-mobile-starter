@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import React from 'react';
 
-import Bookmarks from '../../scenes/bookmarks';
+import Bookmarks from '../../components/bookmarks';
 import styles from './styles';
 
 const BookmarksStack = createStackNavigator();

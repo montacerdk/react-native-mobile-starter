@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import React from 'react';
 
-import Settings from '../../scenes/settings';
+import Settings from '../../components/settings';
 import styles from './styles';
 
 const SettingsStack = createStackNavigator();

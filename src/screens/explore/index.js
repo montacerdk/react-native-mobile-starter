@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import React from 'react';
 
-import Explore from '../../scenes/explore';
+import Explore from '../../components/explore';
 import styles from './styles';
 
 const ExploreStack = createStackNavigator();
