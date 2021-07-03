@@ -105,7 +105,7 @@ const SignIn = ({ navigation }) => {
       ]);
       return;
     }
-    signIn(foundUser);
+    signIn({ user: foundUser });
   };
 
   return (
