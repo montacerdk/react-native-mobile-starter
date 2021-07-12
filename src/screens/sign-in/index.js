@@ -15,7 +15,8 @@ import {
 
 import LoginFacebbok from '../../components/login-facebook';
 import { VALID_USERS } from '../../common/contants';
-import { AuthContext } from '../../store/context';
+import { AuthContext } from '../../store';
+
 import styles from './styles';
 
 const SignIn = ({ navigation }) => {
@@ -24,8 +25,8 @@ const SignIn = ({ navigation }) => {
     secureTextEntry: true,
     isValidPassword: true,
     isValidUser: true,
-    username: '',
     password: '',
+    email: '',
   });
 
   const { colors } = useTheme();
@@ -36,14 +37,14 @@ const SignIn = ({ navigation }) => {
     if (val.trim().length >= 4) {
       setData({
         ...data,
-        username: val,
+        email: val,
         check_textInputChange: true,
         isValidUser: true,
       });
     } else {
       setData({
         ...data,
-        username: val,
+        email: val,
         check_textInputChange: false,
         isValidUser: false,
       });
@@ -87,25 +88,14 @@ const SignIn = ({ navigation }) => {
     });
   };
 
-  const loginHandle = (userName, password) => {
-    const foundUser = VALID_USERS.filter(item => {
-      return userName === item.username && password === item.password;
-    });
-    if (data.username.length === 0 || data.password.length === 0) {
-      Alert.alert(
-        'Wrong Input!',
-        'Username or password field cannot be empty.',
-        [{ text: 'Okay' }],
-      );
-      return;
-    }
-    if (foundUser.length === 0) {
-      Alert.alert('Invalid User!', 'Username or password is incorrect.', [
+  const handleLogin = (email, password) => {
+    if (data.email.length === 0 || data.password.length === 0) {
+      Alert.alert('Wrong Input!', 'Email or password field cannot be empty.', [
         { text: 'Okay' },
       ]);
       return;
     }
-    signIn({ user: foundUser });
+    signIn(email, password);
   };
 
   return (
@@ -124,12 +114,12 @@ const SignIn = ({ navigation }) => {
               color: colors.text,
             },
           ]}>
-          Username
+          Email
         </Text>
         <View style={styles.action}>
           <FontAwesome name="user-o" color={colors.text} size={20} />
           <TextInput
-            placeholder="Your Username"
+            placeholder="Your Email"
             style={[
               styles.textInput,
               {
@@ -149,7 +139,7 @@ const SignIn = ({ navigation }) => {
         {data.isValidUser ? null : (
           <Animatable.View animation="fadeInLeft" duration={500}>
             <Text style={styles.errorMsg}>
-              Username must be 4 characters long.
+              Email must be 4 characters long.
             </Text>
           </Animatable.View>
         )}
@@ -200,7 +190,7 @@ const SignIn = ({ navigation }) => {
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.signIn}
-            onPress={() => loginHandle(data.username, data.password)}>
+            onPress={() => handleLogin(data.email, data.password)}>
             <LinearGradient
               colors={['#14179e', '#14174f']}
               style={styles.signIn}>

@@ -22,7 +22,7 @@ const SignUp = ({ navigation }) => {
     isValidPassword: true,
     confirmPassword: '',
     isValidUser: true,
-    username: '',
+    email: '',
     password: '',
   });
 
@@ -30,14 +30,14 @@ const SignUp = ({ navigation }) => {
     if (val.trim().length >= 4) {
       setData({
         ...data,
-        username: val,
+        email: val,
         check_textInputChange: true,
         isValidUser: true,
       });
     } else {
       setData({
         ...data,
-        username: val,
+        email: val,
         check_textInputChange: false,
         isValidUser: false,
       });

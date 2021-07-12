@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useMemo, useState } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-community/async-storage';
 import { ActivityIndicator, View } from 'react-native';
@@ -14,13 +14,14 @@ import {
 } from 'react-native-paper';
 
 import DrawerContent from '../screens/drawer-content';
-import { AuthContext } from '../store/context';
 import RootStack from '../screens/root-stack';
 import Bookmarks from '../screens/bookmarks';
 import Settings from '../screens/settings';
+import { signInApi } from '../common/api';
 import Details from '../screens/details';
 import Explore from '../screens/explore';
 import Profile from '../screens/profile';
+import { AuthContext } from '../store';
 import Main from '../screens/main';
 
 const Drawer = createDrawerNavigator();
@@ -30,8 +31,8 @@ const Navigation = () => {
 
   const initialLoginState = {
     isLoading: true,
-    userName: null,
     userToken: null,
+    email: null,
   };
 
   const CustomDefaultTheme = {
@@ -69,21 +70,21 @@ const Navigation = () => {
       case 'LOGIN':
         return {
           ...prevState,
-          userName: action.id,
+          email: action.id,
           userToken: action.token,
           isLoading: false,
         };
       case 'LOGOUT':
         return {
           ...prevState,
-          userName: null,
+          email: null,
           userToken: null,
           isLoading: false,
         };
       case 'REGISTER':
         return {
           ...prevState,
-          userName: action.id,
+          email: action.id,
           userToken: action.token,
           isLoading: false,
         };
@@ -92,33 +93,34 @@ const Navigation = () => {
 
   const [loginState, dispatch] = useReducer(loginReducer, initialLoginState);
 
-  const authContext = useMemo(
-    () => ({
-      signIn: async foundUser => {
-        const userToken = String(foundUser[0].userToken);
-        const userName = foundUser[0].username;
-        try {
-          await AsyncStorage.setItem('userToken', userToken);
-        } catch (e) {
+  const authContext = {
+    signIn: async (email, password) => {
+      signInApi(email, password)
+        .then(async accessToken => {
+          try {
+            await AsyncStorage.setItem('userToken', accessToken);
+            dispatch({ type: 'LOGIN', id: email, token: accessToken });
+          } catch (e) {
+            console.log(e);
+          }
+        })
+        .catch(e => {
           console.log(e);
-        }
-        dispatch({ type: 'LOGIN', id: userName, token: userToken });
-      },
-      signOut: async () => {
-        try {
-          await AsyncStorage.removeItem('userToken');
-        } catch (e) {
-          console.log(e);
-        }
-        dispatch({ type: 'LOGOUT' });
-      },
-      signUp: () => {},
-      toggleTheme: () => {
-        setIsDarkTheme(isDarkTheme => !isDarkTheme);
-      },
-    }),
-    [],
-  );
+        });
+    },
+    signOut: async () => {
+      try {
+        await AsyncStorage.removeItem('userToken');
+      } catch (e) {
+        console.log(e);
+      }
+      dispatch({ type: 'LOGOUT' });
+    },
+    signUp: () => {},
+    toggleTheme: () => {
+      setIsDarkTheme(isDarkTheme => !isDarkTheme);
+    },
+  };
 
   useEffect(() => {
     setTimeout(async () => {

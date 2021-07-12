@@ -9,7 +9,7 @@ import {
 import React, { useContext } from 'react';
 
 import { Colors, Typography } from '../../styles';
-import { AuthContext } from '../../store/context';
+import { AuthContext } from '../../store';
 import styles from './styles';
 
 const LoginFacebbok = ({ navigation }) => {

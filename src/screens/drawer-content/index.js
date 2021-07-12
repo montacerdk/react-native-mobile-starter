@@ -15,7 +15,7 @@ import {
 } from 'react-native-paper';
 import React from 'react';
 
-import { AuthContext } from '../../store/context';
+import { AuthContext } from '../../store';
 
 import styles from './styles';
 
