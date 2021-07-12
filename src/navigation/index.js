@@ -94,19 +94,28 @@ const Navigation = () => {
   const [loginState, dispatch] = useReducer(loginReducer, initialLoginState);
 
   const authContext = {
-    signIn: async (email, password) => {
-      signInApi(email, password)
-        .then(async accessToken => {
-          try {
-            await AsyncStorage.setItem('userToken', accessToken);
-            dispatch({ type: 'LOGIN', id: email, token: accessToken });
-          } catch (e) {
-            console.log(e);
-          }
-        })
-        .catch(e => {
-          console.log(e);
+    signIn: async (user, facebookData) => {
+      if (facebookData && facebookData.fromFacebook) {
+        await AsyncStorage.setItem('userToken', facebookData.facebookToken);
+        dispatch({
+          type: 'LOGIN',
+          id: user.email,
+          token: facebookData.facebookToken,
         });
+      } else {
+        signInApi(user.email, user.password)
+          .then(async accessToken => {
+            try {
+              await AsyncStorage.setItem('userToken', accessToken);
+              dispatch({ type: 'LOGIN', id: user.email, token: accessToken });
+            } catch (e) {
+              console.log(e);
+            }
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
     },
     signOut: async () => {
       try {

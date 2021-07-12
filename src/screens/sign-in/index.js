@@ -95,7 +95,7 @@ const SignIn = ({ navigation }) => {
       ]);
       return;
     }
-    signIn(email, password);
+    signIn({ email, password });
   };
 
   return (

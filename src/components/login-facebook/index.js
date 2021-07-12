@@ -12,7 +12,7 @@ import { Colors, Typography } from '../../styles';
 import { AuthContext } from '../../store';
 import styles from './styles';
 
-const LoginFacebbok = ({ navigation }) => {
+const LoginFacebbok = () => {
   const { signIn } = useContext(AuthContext);
 
   const getUserInfos = token => {
@@ -28,7 +28,7 @@ const LoginFacebbok = ({ navigation }) => {
         if (error) {
           console.log('login info has error: ' + error);
         } else {
-          signIn({ user, fromFacebook: true }, navigation.navigate('Home'));
+          signIn(user, { fromFacebook: true, facebookToken: token });
         }
       },
     );
