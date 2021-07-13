@@ -206,7 +206,7 @@ const SignIn = ({ navigation }) => {
             <Text style={[styles.textSign, { color: '#14174f' }]}>Sign Up</Text>
           </TouchableOpacity>
           <Text style={{ marginTop: 20, marginBottom: 20 }}>Or</Text>
-          <LoginFacebbok navigation={navigation} />
+          <LoginFacebbok />
         </View>
       </Animatable.View>
     </View>

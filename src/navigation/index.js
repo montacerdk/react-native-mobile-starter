@@ -13,11 +13,11 @@ import {
   Provider as PaperProvider,
 } from 'react-native-paper';
 
+import { signInApi, continueWithFacebookApi } from '../common/api';
 import DrawerContent from '../screens/drawer-content';
 import RootStack from '../screens/root-stack';
 import Bookmarks from '../screens/bookmarks';
 import Settings from '../screens/settings';
-import { signInApi } from '../common/api';
 import Details from '../screens/details';
 import Explore from '../screens/explore';
 import Profile from '../screens/profile';
@@ -96,12 +96,22 @@ const Navigation = () => {
   const authContext = {
     signIn: async (user, facebookData) => {
       if (facebookData && facebookData.fromFacebook) {
-        await AsyncStorage.setItem('userToken', facebookData.facebookToken);
-        dispatch({
-          type: 'LOGIN',
-          id: user.email,
-          token: facebookData.facebookToken,
-        });
+        continueWithFacebookApi(user, facebookData.facebookToken)
+          .then(async accessToken => {
+            try {
+              await AsyncStorage.setItem('userToken', accessToken);
+              dispatch({
+                type: 'LOGIN',
+                id: user.email,
+                token: accessToken,
+              });
+            } catch (e) {
+              console.log(e);
+            }
+          })
+          .catch(e => {
+            console.log(e);
+          });
       } else {
         signInApi(user.email, user.password)
           .then(async accessToken => {
