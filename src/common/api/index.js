@@ -3,15 +3,14 @@ import axios from 'axios';
 export const apiInstance = axios.create({
   timeout: 15000,
   responseType: 'json',
-  baseURL: 'https://boilerplate-api.bptech.dev',
-  //baseURL: 'http://192.168.236.34:8081',
+  baseURL: 'http://192.168.2.49:4000',
   validateStatus: status => status >= 200 && status <= 302,
 });
 
 export const signInApi = async (email, password) => {
   try {
     return await apiInstance
-      .post('/api/auth/sign-in', {
+      .post('/api/auth/signIn', {
         email: email,
         password: password,
       })
