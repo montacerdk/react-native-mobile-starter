@@ -1,32 +1,32 @@
 import Icon from 'react-native-vector-icons/AntDesign';
 import { TouchableOpacity, Text } from 'react-native';
+import React, { useContext } from 'react';
 import {
   GraphRequestManager,
   LoginManager,
   GraphRequest,
   AccessToken,
 } from 'react-native-fbsdk-next';
-import React, { useContext } from 'react';
 
 import { Colors, Typography } from '../../styles';
 import { AuthContext } from '../../store';
 import styles from './styles';
 
-const LoginFacebbok = () => {
+const FacebookButton = () => {
   const { signIn } = useContext(AuthContext);
 
-  const getUserInfos = token => {
-    const PROFILE_REQUEST_PARAMS = {
+  const handleUserInfos = token => {
+    const userParams = {
       fields: {
         string: 'id,name,first_name,last_name,picture,email',
       },
     };
     const userProfileRequest = new GraphRequest(
       '/me',
-      { token, parameters: PROFILE_REQUEST_PARAMS },
+      { token, parameters: userParams },
       (error, user) => {
         if (error) {
-          console.log('login info has error: ' + error);
+          console.error('Handle user infos error: ', error);
         } else {
           signIn(user, { fromFacebook: true, facebookToken: token });
         }
@@ -42,13 +42,13 @@ const LoginFacebbok = () => {
           console.log('Login cancelled');
         } else {
           AccessToken.getCurrentAccessToken().then(data => {
-            const accessToken = data.accessToken.toString();
-            getUserInfos(accessToken);
+            const token = data.accessToken.toString();
+            handleUserInfos(token);
           });
         }
       },
       error => {
-        console.log('Login fail with error: ' + error);
+        console.error('Handle Login with facebook error: ', error);
       },
     );
   };
@@ -66,4 +66,4 @@ const LoginFacebbok = () => {
   );
 };
 
-export default LoginFacebbok;
+export default FacebookButton;

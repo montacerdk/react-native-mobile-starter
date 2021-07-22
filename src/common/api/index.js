@@ -3,7 +3,7 @@ import axios from 'axios';
 export const apiInstance = axios.create({
   timeout: 15000,
   responseType: 'json',
-  baseURL: 'http://192.168.2.49:4000',
+  baseURL: 'http://192.168.236.34:4000',
   validateStatus: status => status >= 200 && status <= 302,
 });
 
